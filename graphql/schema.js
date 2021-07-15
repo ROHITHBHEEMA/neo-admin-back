@@ -5,6 +5,12 @@ module.exports = buildSchema(`
     type AuthData {
         token: String!
         userId: String!
+        expiresIn: Int!
+    }
+    
+    input loginData{
+        username: String!
+        password: String!
     }
     
     type KeyfeatureData{
@@ -25,9 +31,12 @@ module.exports = buildSchema(`
     }
     
     
+    
+    
+    
 
     type RootQuery {
-        login(username: String!, password: String!): AuthData!
+        login(logindata:loginData): AuthData!
         getAllKeyfeatures:KeyfeatureslistData
         getKeyfeaturebyid(id:String!):KeyfeatureData
     }

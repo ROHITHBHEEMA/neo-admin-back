@@ -5,15 +5,15 @@ const User = require('../models/user');
 const Keyfeature = require('../models/keyfeature')
 
 module.exports = {
-    login: async function({ username, password }) {
+    login: async function({ logindata }) {
 
-        const user = await User.findOne({ username: username });
+        const user = await User.findOne({ username: logindata.username });
         if (!user) {
             const error = new Error('User not found.');
             error.code = 401;
             throw error;
         }
-        if (user.password !== password) {
+        if (user.password !== logindata.password) {
             const error = new Error('Password is incorrect.');
             error.code = 401;
             throw error;
@@ -26,7 +26,7 @@ module.exports = {
             'somesupersecretsecret',
             { expiresIn: '1h' }
         );
-        return { token: token, userId: user._id.toString() };
+        return { token: token, userId: user._id.toString() , expiresIn:3600};
     },
 
     getAllKeyfeatures:async function(){
